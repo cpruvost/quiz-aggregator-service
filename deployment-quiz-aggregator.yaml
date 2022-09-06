@@ -23,8 +23,8 @@ spec:
         app: quiz-aggregator
     spec:
       containers:
-      - image: cpruvost/cn-quiz-aggregator-service:1.0.0-SNAPSHOT
-        imagePullPolicy: IfNotPresent
+      - image: cpruvost/cn-quiz-aggregator-service:1.0.2-SNAPSHOT
+        imagePullPolicy: Always
         name: cn-quiz-aggregator-service
         envFrom:
           - configMapRef:

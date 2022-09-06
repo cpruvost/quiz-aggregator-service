@@ -11,8 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.quizforevent.microservices.quizaggregatorservice.domain.Quiz;
-import com.quizforevent.microservices.quizaggregatorservice.domain.QuizSimple;
+import com.quizforevent.microservices.quizaggregatorservice.domain.QuizAggregator;
 
 @RestController
 public class QuizAggregatorController {
@@ -22,28 +21,19 @@ public class QuizAggregatorController {
 	private QuizServiceProxy proxy;
 
 	@GetMapping("/quizaggregator")
-	public ResponseEntity<List<QuizSimple>> getQuizSimpleListFeign() {
+	public ResponseEntity<QuizAggregator> getQuizAggregatorFeign() {
 		try {		
 		
-			logger.info("quizaggregator");
+			logger.info("getQuizAggregatorFeign");
 	
-			List<Quiz> quizzes = proxy.retrieveExchangeValue();
+			QuizAggregator quizAggregator = proxy.retrieveExchangeValue();
 			
-			List<QuizSimple> quizSimpleList = new ArrayList<QuizSimple>();
 			
-			for (Quiz quiz : quizzes) {
-		    	QuizSimple quizSimple = new QuizSimple();
-		    	quizSimple.setId(quiz.getId());
-		    	quizSimple.setName(quiz.getName());
-		    	quizSimple.setEnvironment(quiz.getEnvironment());
-		    	quizSimpleList.add(quizSimple);
-		    }
-			
-			if (quizSimpleList.isEmpty()) {
+			if (quizAggregator == null) {
 			  return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
 			      
-			return new ResponseEntity<>(quizSimpleList, HttpStatus.OK);
+			return new ResponseEntity<>(quizAggregator, HttpStatus.OK);
 		}
 		  catch (Exception e) {
 	      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
