@@ -21,6 +21,7 @@ spec:
     metadata:
       labels:
         app: quiz-aggregator
+        version: V1.0.2
     spec:
       containers:
       - image: cpruvost/cn-quiz-aggregator-service:1.0.2-SNAPSHOT
