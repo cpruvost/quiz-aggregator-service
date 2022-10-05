@@ -12,8 +12,40 @@ You need to have a kubernetes cluster (with istio installed and with argocd) if 
 
 ## Look at the code
 
-Looking at the code you will see that we are using the Feign Client to call the microservice Quiz Service. And if you know Jaeger you will see that we propagates all the headers in order to follow the execution time of each service. 
+Fork the repository https://github.com/cpruvost/quiz-aggregator-service
 
-## Deploy with argocd
-to be done
+Looking at the code you will see that we are using the Feign Client to call the microservice Quiz Service. And if you know Jaeger you will see that we propagates all the headers automatically in order to follow the execution time of each service that calls another sevice. 
 
+## Deployment with argocd
+
+You need to install argocd in your kubernestes cluster.
+
+Replace "cpruvost" by your docker hub name in the pom.xml file
+
+![Pom V1](docs/pomV1.png)
+
+Build the docker image using Spring Boot
+
+![Docker V1](docs/BuildImage.png)
+
+Push your docker image to your docker registry (docker hub for ex)
+
+Update now the file deployment-quiz-aggregator-application.yaml with your new repository, so update repoURL.
+
+Update now the file deployment-quiz-aggregator.yaml with your docker image.
+
+Deploy the argocd application to your kubernetes cluster : kubectl apply -f deployment-quiz-aggregator-application.yaml
+
+## Test Quiz Aggregator Service
+
+Look at the Load Balancer Public IP of the service for quiz Aggregator in kubernetes (kubectl get svc)
+
+Launch the Cloud shell in the OCI console and run : watch -n 0.2 curl http://ipadressLB:8100/quizaggregator 
+
+Then 90/100 you get V1 Quiz Service
+
+![Canary V1](docs/CanaryV1.png)
+
+And 10/100 you get V1.2 Quiz Service
+
+![Canary V1.2](docs/CanaryV12.png)
