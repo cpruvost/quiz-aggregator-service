@@ -36,6 +36,10 @@ Update now the file deployment-quiz-aggregator.yaml with your docker image.
 
 Deploy the argocd application to your kubernetes cluster : kubectl apply -f deployment-quiz-aggregator-application.yaml
 
+Check that all is good in the argocd console
+
+![Argocd](docs/argocd.png)
+
 ## Test Quiz Aggregator Service
 
 Look at the Load Balancer Public IP of the service for quiz Aggregator in kubernetes (kubectl get svc)
